@@ -8,15 +8,20 @@ namespace UnityForms
     [TypeConverter(typeof(ListItemConverter)), DesignTimeVisible(false), ToolboxItem(false)]
     public class ListItem : Component
     {
-        private string _text = "";
-        private string _toolTip = "";
-        private bool _showToolTip = true; 
-
+        private string text = "";
 
         [UnityFormAttribute()]
         [Browsable(true)]
-        public bool ShowToolTip { get { return _showToolTip; } set { _showToolTip = value; } }
+        public bool Selected
+        {
+            get; set;
+        }
 
+        [UnityFormAttribute(), Browsable(true)]
+        public bool ShowToolTip
+        {
+            get; set;
+        }
 
         [UnityFormAttribute()]
         [Browsable(true)]
@@ -42,31 +47,41 @@ namespace UnityForms
         [Browsable(true)]
         public string Text
         {
-            get { return _text; }
+            get
+            {
+                return this.text;
+            }
+
             set
             {
-                _text = value;
-                if (Control != null)
+                this.text = value;
+
+                if (this.Control != null)
                 {
-                    Control.Invalidate();
+                    this.Control.Invalidate();
                 }
             }
         }
 
-        [UnityFormAttribute()]
-        [Browsable(true)]
+        [UnityFormAttribute(), Browsable(true)]
         public string ToolTip
         {
-            get { return _toolTip; }
-            set { _toolTip = value; }
+            get; set;
         }
 
         internal ListItemCollectionControl Control = null;
 
         internal Rectangle Bounds;
 
+        public ListItem()
+        {
+            this.ToolTip = string.Empty;
+            this.ShowToolTip = true;
+        }
 
+        public void Move(ListBox listBox)
+        {
+            throw new NotImplementedException();
+        }
     }
-
-
 }

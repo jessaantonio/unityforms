@@ -7,6 +7,8 @@
 // <version>$Revision: 1 $</version>
 //----------------------------------------------------------------------
 
+using System;
+
 namespace UnityForms
 {
     using UnityEngine;

@@ -1,22 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-
-
-namespace UnityForms
+﻿namespace UnityForms
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+
     class ControlDesginer : System.Windows.Forms.Design.ControlDesigner
     {
-
-
-        //// This method is invoked when the associated component is double-clicked.
-        //public override void DoDefaultAction()
-        //{
-        //    WinForms.MessageBox.Show("The event handler for the default action was invoked.");
-        //}
-
         protected override void PreFilterProperties(System.Collections.IDictionary properties)
         {
             base.PreFilterProperties(properties);
@@ -39,7 +28,6 @@ namespace UnityForms
                     copiedAtts.Add(BrowsableAttribute.No);
                     properties[key] = TypeDescriptor.CreateProperty(old.ComponentType, old, copiedAtts.ToArray());
                 }
-
             }
         }
 
@@ -97,6 +85,5 @@ namespace UnityForms
             }
             return ret;
         }
-
     }
 }

@@ -17,21 +17,29 @@ namespace UnityForms
     /// </summary>
     public abstract class ContainerControl : Control, IEnumerable<Control>
     {
-        #region Private Variables
-
         /// <summary>
         /// list of controls
         /// </summary>
-        private List<Control> controls = new List<Control>();
+        private readonly List<Control> controls = new List<Control>();
+
+        /// <summary>
+        /// You must set the AllowDrop property to allow for dragging and dropping to this control
+        /// </summary>
+        private bool allowDrop = false;
 
         /// <summary>
         /// the front control 
         /// </summary>
-        private Control frontControl = null;
+        private Control frontControl;
 
-        #endregion
-
-        #region Public Properties
+        /// <summary>
+        /// Gets or sets a value indicating whether AllowDrop.
+        /// </summary>
+        public bool AllowDrop
+        {
+            get { return this.allowDrop; }
+            set { this.allowDrop = value; }
+        }
 
         /// <summary>
         /// Gets the count of controls in the list
@@ -49,10 +57,15 @@ namespace UnityForms
             get { return this.controls; }
         }
 
-        #endregion
-
-        #region Public Methods
-
+        /// <summary>
+        /// Retorna un control especifico
+        /// </summary>
+        /// <param name="index">
+        /// El indice del control
+        /// </param>
+        /// <returns>
+        /// El control requerido
+        /// </returns>
         public Control this[int index]
         {
             get
@@ -62,7 +75,7 @@ namespace UnityForms
                     return this.controls[index];
                 }
 
-                throw new ApplicationException("Indice incorrecto");
+                throw new ArgumentException("Indice incorrecto", "index");
             }
 
             set
@@ -72,10 +85,10 @@ namespace UnityForms
         }
 
         /// <summary>
-        /// Add a control
+        /// Adiciona un contro al contenedor
         /// </summary>
-        /// <param name="control">the control</param>
-        /// <returns>the added control</returns>
+        /// <param name="control">El contro a adicionar</param>
+        /// <returns>El control adicionado</returns>
         public virtual Control Add(Control control)
         {
             this.controls.Add(control);
@@ -83,7 +96,7 @@ namespace UnityForms
         }
 
         /// <summary>
-        /// Indica si el control existe en la lista
+        /// Indica si el control existe en el contenedor
         /// </summary>
         /// <param name="control">el control</param>
         /// <returns>true si el control existe</returns>
@@ -93,10 +106,10 @@ namespace UnityForms
         }
 
         /// <summary>
-        /// Indica si el control existe en la lista
+        /// Elimina un control de la lista, primero verifica si existe en el
         /// </summary>
         /// <param name="control">el control</param>
-        /// <returns>true si el control existe</returns>
+        /// <returns>true si el control fue eliminado</returns>
         public bool Removes(Control control)
         {
             if (this.Contains(control))
@@ -107,39 +120,45 @@ namespace UnityForms
             return false;
         }
 
+        /// <summary>
+        /// Manda un control al frente
+        /// </summary>
+        /// <param name="control">
+        /// El control que va al frente
+        /// </param>
         public void BringToFront(Control control)
         {
             if (this.frontControl == null || this.frontControl.ID != control.ID)
             {
-                if (this.controls.Contains(control))
-                {
-                    this.frontControl = control;
-                }
-                else
-                {
-                    this.frontControl = null;
-                }
+                this.frontControl = this.controls.Contains(control) ? control : null;
             }
         }
 
-        #endregion
-
-        #region IEnumerable
-
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
+        /// <returns>
+        /// A IEnumerator that can be used to iterate through the collection.
+        /// </returns>
         public IEnumerator<Control> GetEnumerator()
         {
             return this.controls.GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        /// An IEnumerator object that can be used to iterate through the collection.
+        /// </returns>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.controls.GetEnumerator();
         }
 
-        #endregion
-
-        #region Implements Control
-
+        /// <summary>
+        /// Inicializa el contenedor
+        /// </summary>
         protected override void Initialize()
         {
             for (int i = 0; i < this.controls.Count; i++)
@@ -149,10 +168,12 @@ namespace UnityForms
             }
         }
 
-        #endregion
-
-        #region Protected Methods
-
+        /// <summary>
+        /// Pinta los controles internos
+        /// </summary>
+        /// <returns>
+        /// Retorna la cantidad de controles pintados
+        /// </returns>
         protected int DrawInnerControls()
         {
             if (this.controls != null)
@@ -164,18 +185,19 @@ namespace UnityForms
 
                 if (!SuspendedLayout)
                 {
-                    try
+                    foreach (Control obj in this.controls)
                     {
-                        foreach (Control obj in this.controls)
+                        if (this.frontControl == null || this.frontControl.ID != obj.ID)
                         {
-                            if (this.frontControl == null || this.frontControl.ID != obj.ID)
+                            if (!SuspendedLayout)
                             {
                                 obj.OnGUI();
                             }
+                            else
+                            {
+                                break;
+                            }
                         }
-                    }
-                    catch
-                    {
                     }
                 }
 
@@ -190,6 +212,15 @@ namespace UnityForms
             return 0;
         }
 
+        /// <summary>
+        /// Pinta un control especifico
+        /// </summary>
+        /// <param name="index">
+        /// El indice del control
+        /// </param>
+        /// <returns>
+        /// La cantidad de controles pintados
+        /// </returns>
         protected int DrawInnerControls(int index)
         {
             if (this.controls != null && index < this.controls.Count)
@@ -201,7 +232,5 @@ namespace UnityForms
 
             return 0;
         }
-
-        #endregion
     }
 }

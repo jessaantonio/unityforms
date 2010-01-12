@@ -9,8 +9,6 @@
 
 namespace UnityForms
 {
-    using System;
-
     public delegate void MouseEventHandler(object sender, MouseEventArgs e);
 
     public delegate void ToolClickEventHandler(object sender, ToolClickEventArgs e);

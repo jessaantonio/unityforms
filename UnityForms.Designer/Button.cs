@@ -1,11 +1,9 @@
-﻿
-using System;
-using System.Drawing;
-using System.ComponentModel;
-
-
-namespace UnityForms
+﻿namespace UnityForms
 {
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+
     [DesignTimeVisible(true), ToolboxItem(true)]
     public class Button : Control 
     {

@@ -1,22 +1,30 @@
-using System;
-using System.ComponentModel;
-using System.Drawing;
-
-
 namespace UnityForms
 {
+    using System;
+    using System.ComponentModel;
+    using System.Drawing;
+
     [TypeConverter(typeof(ToolButtonConverter)), DesignTimeVisible(false), ToolboxItem(false)]
     public class ToolButton : Component
     {
-        private string _text = "";
-        private string _toolTip = "";
-        private bool _showToolTip = true; 
-
+        private string text = "";
+        private string toolTip = "";
+        private bool showToolTip = true; 
 
         [UnityFormAttribute()]
         [Browsable(true)]
-        public bool ShowToolTip { get { return _showToolTip; } set { _showToolTip = value; } }
-
+        public bool ShowToolTip
+        {
+            get
+            {
+                return this.showToolTip;
+            } 
+            
+            set
+            {
+                this.showToolTip = value;
+            }
+        }
 
         [UnityFormAttribute()]
         [Browsable(true)]
@@ -38,13 +46,18 @@ namespace UnityForms
         [Browsable(true)]
         public string Text
         {
-            get { return _text; }
+            get
+            {
+                return this.text;
+            }
+
             set
             {
-                _text = value;
-                if (Control != null)
+                this.text = value;
+
+                if (this.Control != null)
                 {
-                    Control.Invalidate();
+                    this.Control.Invalidate();
                 }
             }
         }
@@ -53,8 +66,15 @@ namespace UnityForms
         [Browsable(true)]
         public string ToolTip
         {
-            get { return _toolTip; }
-            set { _toolTip = value; }
+            get
+            {
+                return this.toolTip;
+            }
+
+            set
+            {
+                this.toolTip = value;
+            }
         }
 
         internal ToolCollectionControl Control = null;

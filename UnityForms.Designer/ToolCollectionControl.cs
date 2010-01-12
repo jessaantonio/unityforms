@@ -10,46 +10,39 @@ namespace UnityForms
 	[Designer(typeof(ToolCollectionControlDesigner))]
 	public class ToolCollectionControl : Control
 	{
-		protected ToolButtonCollection _tools;
-        protected ToolButton _highlightedButton;
+		protected ToolButtonCollection tools;
+        protected ToolButton highlightedButton;
 
 		public ToolCollectionControl()
 		{
 			SetStyle(System.Windows.Forms.ControlStyles.DoubleBuffer, true);
 			SetStyle(System.Windows.Forms.ControlStyles.AllPaintingInWmPaint, true);
 
-			_tools = new ToolButtonCollection(this);
+			tools = new ToolButtonCollection(this);
 		}
 
         [UnityFormAttribute()]
         [Browsable(true)]
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-		public ToolButtonCollection Tools
+		public new ToolButtonCollection Tools
 		{
 			get
 			{
-				return _tools;
+				return tools;
 			}
-		}
-   
-        protected override void OnResize(System.EventArgs e)
-		{
-			base.OnResize(e);
 		}
 
         protected virtual void CalculateBounds(System.Windows.Forms.PaintEventArgs e)
         {
-       
-
         }
 
 		protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
 		{
             CalculateBounds(e);
 
-            foreach (ToolButton tool in _tools)
+            foreach (ToolButton tool in tools)
             {
-                PaintLibrary.Button(e, tool.Bounds.Location, tool.Bounds.Size, tool.Text, _highlightedButton == tool);
+                PaintLibrary.Button(e, tool.Bounds.Location, tool.Bounds.Size, tool.Text, highlightedButton == tool);
             }
 
 		}
@@ -62,7 +55,7 @@ namespace UnityForms
 
 			if (DesignMode)
 			{
-				foreach (ToolButton button in Tools)
+				foreach (ToolButton button in this.Tools)
 				{
 					wrct = button.Bounds;
 					if (wrct.Contains(e.X, e.Y))
@@ -85,7 +78,7 @@ namespace UnityForms
             ISelectionService s = (ISelectionService)GetService(typeof(ISelectionService));
 
             // See if the primary selection is one of our buttons
-            foreach (ToolButton button in Tools)
+            foreach (ToolButton button in this.Tools)
             {
                 if (s.PrimarySelection == button)
                 {
@@ -95,9 +88,9 @@ namespace UnityForms
             }
 
             // Apply if necessary
-            if (newHighlightedButton != _highlightedButton)
+            if (newHighlightedButton != highlightedButton)
             {
-                _highlightedButton = newHighlightedButton;
+                highlightedButton = newHighlightedButton;
                 Invalidate();
             }
         }

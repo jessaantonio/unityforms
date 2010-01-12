@@ -24,10 +24,10 @@ namespace UnityForms
 
         protected override void CalculateBounds(System.Windows.Forms.PaintEventArgs e)
         {
-            if (_tools.Count > 0)
+            if (tools.Count > 0)
             {
                 const int PADDING = 4;
-                int rows = (_tools.Count - 1) / Columns + 1;
+                int rows = (tools.Count - 1) / Columns + 1;
 
                 if (rows == 0)
                 {
@@ -38,7 +38,7 @@ namespace UnityForms
                 Point location = new Point(0, 0);
 
                 int i = 0;
-                foreach (ToolButton tool in _tools)
+                foreach (ToolButton tool in tools)
                 {
                     tool.Bounds = new Rectangle(location, size);
                     location.X += PADDING + size.Width;

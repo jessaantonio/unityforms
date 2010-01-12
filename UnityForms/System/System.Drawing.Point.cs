@@ -1,7 +1,4 @@
-﻿#if !VISUALSTUDIO
-
-
-namespace System.Drawing
+﻿namespace System.Drawing
  {
      // Summary:
      //     Represents an ordered pair of integer x- and y-coordinates that defines a
@@ -9,18 +6,9 @@ namespace System.Drawing
      [Serializable]
      public struct Point
      {
-         private int _x;
-         private int _y;
-         private bool _isEmpty;
-
-         /// <summary>
-         /// Represents a System.Drawing.Point that has System.Drawing.Point.X and System.Drawing.Point.Y
-         /// values set to zero.
-         /// </summary>
-         public static Point Empty
-         {
-             get { return new Point(true); }
-         }
+         private int x;
+         private int y;
+         private bool isEmpty;
 
          /// <summary>
          /// Initializes a new instance of the System.Drawing.Point class using coordinates
@@ -33,14 +21,7 @@ namespace System.Drawing
          {
              throw new NotImplementedException();
          }
-
-         private Point(bool isEmpty)
-         {
-             _isEmpty = isEmpty;
-             _x = 0;
-             _y = 0;
-         }
-
+        
          /// <summary>
          /// Initializes a new instance of the System.Drawing.Point class from a System.Drawing.Size.
          /// </summary>
@@ -49,9 +30,9 @@ namespace System.Drawing
          /// </param>
          public Point(Size sz)
          {
-             _isEmpty = false;
-             _x = sz.Width;
-             _y = sz.Width;
+             this.isEmpty = false;
+             this.x = sz.Width;
+             this.y = sz.Width;
          }
 
          /// <summary>
@@ -66,9 +47,78 @@ namespace System.Drawing
          /// </param>
          public Point(int x, int y)
          {
-             _isEmpty = false;
-             _x = x;
-             _y = y;
+             this.isEmpty = false;
+             this.x = x;
+             this.y = y;
+         }
+
+         private Point(bool isEmpty)
+         {
+             this.isEmpty = isEmpty;
+             this.x = 0;
+             this.y = 0;
+         }
+
+         /// <summary>
+         /// Represents a System.Drawing.Point that has System.Drawing.Point.X and System.Drawing.Point.Y
+         /// values set to zero.
+         /// </summary>
+         public static Point Empty
+         {
+             get
+             {
+                 return new Point(true);
+             }
+         }
+
+         /// <summary>
+         /// Gets a value indicating whether this System.Drawing.Point is empty.
+         /// Returns:
+         ///    true if both System.Drawing.Point.X and System.Drawing.Point.Y are 0; otherwise,
+         ///    false.
+         /// </summary>
+         public bool IsEmpty
+         {
+             get
+             {
+                 return this.isEmpty;
+             }
+         }
+
+         /// <summary>
+         /// Gets or sets the x-coordinate of this System.Drawing.Point.
+         /// Returns: 
+         ///    The x-coordinate of this System.Drawing.Point.
+         /// </summary>
+         public int X
+         {
+             get
+             {
+                 return this.x;
+             }
+
+             set
+             {
+                 this.x = value;
+             }
+         }
+
+         /// <summary>
+         /// Gets or sets the y-coordinate of this System.Drawing.Point.
+         /// Returns:
+         ///    The y-coordinate of this System.Drawing.Point.
+         /// </summary>
+         public int Y
+         {
+             get
+             {
+                 return this.y;
+             }
+
+             set
+             {
+                 this.y = value;
+             }
          }
 
          /// <summary>
@@ -83,7 +133,7 @@ namespace System.Drawing
          /// </returns>
          public static Point operator -(Point pt, Size sz)
          {
-             return new Point(pt._x - sz.Width, pt._y - sz.Height);
+             return new Point(pt.x - sz.Width, pt.y - sz.Height);
          }
 
          /// <summary>
@@ -95,7 +145,7 @@ namespace System.Drawing
          /// A System.Drawing.Point to compare.
          /// </param>
          /// <param name="right">
-         /// A System.Drawing.Point to compare.
+         /// A System.Drawing.Point to be compared.
          /// </param>
          /// <returns>
          /// true if the values of either the System.Drawing.Point.X properties or the
@@ -103,7 +153,7 @@ namespace System.Drawing
          /// </returns>
          public static bool operator !=(Point left, Point right)
          {
-             return (left._x != right._x || left._y != right._y);
+             return left.x != right.x || left.y != right.y;
          }
 
          /// <summary>
@@ -121,7 +171,7 @@ namespace System.Drawing
          /// </returns>
          public static Point operator +(Point pt, Size sz)
          {
-             return new Point(pt._x + sz.Width, pt._y + sz.Height);
+             return new Point(pt.x + sz.Width, pt.y + sz.Height);
          }
 
          /// <summary>
@@ -133,7 +183,7 @@ namespace System.Drawing
          /// A System.Drawing.Point to compare.
          /// </param>
          /// <param name="right">
-         /// A System.Drawing.Point to compare.
+         /// A System.Drawing.Point to be compared.
          /// </param>
          /// <returns>
          /// true if the System.Drawing.Point.X and System.Drawing.Point.Y values of left
@@ -141,7 +191,7 @@ namespace System.Drawing
          /// </returns>
          public static bool operator ==(Point left, Point right)
          {
-             return left._x == right._x && left._y == right._y;
+             return left.x == right.x && left.y == right.y;
          }
 
          /// <summary>
@@ -156,7 +206,7 @@ namespace System.Drawing
          /// </returns>
          public static explicit operator Size(Point p)
          {
-             return new Size(p._x, p._y);
+             return new Size(p.x, p.y);
          }
 
          /// <summary>
@@ -171,40 +221,7 @@ namespace System.Drawing
          /// </returns>
          public static implicit operator PointF(Point p)
          {
-             return new PointF(p._x, p._y);
-         }
-
-         /// <summary>
-         /// Gets a value indicating whether this System.Drawing.Point is empty.
-         /// Returns:
-         ///    true if both System.Drawing.Point.X and System.Drawing.Point.Y are 0; otherwise,
-         ///    false.
-         /// </summary>
-         public bool IsEmpty 
-         {
-             get { return _isEmpty; }
-         }
-         
-         /// <summary>
-         /// Gets or sets the x-coordinate of this System.Drawing.Point.
-         /// Returns: 
-         ///    The x-coordinate of this System.Drawing.Point.
-         /// </summary>
-         public int X 
-         {
-             get { return _x; } 
-             set { _x = value; }
-         }
-
-         /// <summary>
-         /// Gets or sets the y-coordinate of this System.Drawing.Point.
-         /// Returns:
-         ///    The y-coordinate of this System.Drawing.Point.
-         /// </summary>
-         public int Y 
-         {
-             get { return _y; }
-             set { _y = value; }
+             return new PointF(p.x, p.y);
          }
 
          /// <summary>
@@ -221,9 +238,8 @@ namespace System.Drawing
          /// </returns>
          public static Point Add(Point pt, Size sz)
          {
-             return new Point(pt._x + sz.Width, pt._y + sz.Height);
+             return new Point(pt.x + sz.Width, pt.y + sz.Height);
          }
-
         
          /// <summary>
          /// Converts the specified System.Drawing.PointF to a System.Drawing.Point by
@@ -240,65 +256,6 @@ namespace System.Drawing
          {
              throw new NotImplementedException();
          }
-        
-        
-         /// <summary>
-         /// Specifies whether this System.Drawing.Point contains the same coordinates
-         /// as the specified System.Object.
-         /// </summary>
-         /// <param name="obj">
-         /// The System.Object to test.
-         /// </param>
-         /// <returns>
-         /// true if obj is a System.Drawing.Point and has the same coordinates as this
-         /// System.Drawing.Point.
-         /// </returns>
-         public override bool Equals(object obj)
-         {
-             return this._x == ((Point)obj)._x && this._y == ((Point)obj)._y;
-         }
-        
-
-         /// <summary>
-         /// Returns a hash code for this System.Drawing.Point.
-         /// </summary>
-         /// <returns>
-         /// An integer value that specifies a hash value for this System.Drawing.Point.
-         /// </returns>
-         public override int GetHashCode()
-         {
-             return base.GetHashCode();
-         }
-        
-
-         /// <summary>
-         /// Translates this System.Drawing.Point by the specified System.Drawing.Point.
-         /// </summary>
-         /// <param name="p">
-         /// The System.Drawing.Point used offset this System.Drawing.Point.
-         /// </param>
-         public void Offset(Point p)
-         {
-             _x += p._x;
-             _y += p._y;
-         }
-        
-
-         /// <summary>
-         /// Translates this System.Drawing.Point by the specified amount.
-         /// </summary>
-         /// <param name="dx">
-         /// The amount to offset the x-coordinate.
-         /// </param>
-         /// <param name="dy">
-         /// The amount to offset the y-coordinate.
-         /// </param>
-         public void Offset(int dx, int dy)
-         {
-             _x += dx;
-             _y += dy;
-         }
-       
 
          /// <summary>
          /// Converts the specified System.Drawing.PointF to a System.Drawing.Point object
@@ -314,7 +271,6 @@ namespace System.Drawing
          {
              return new Point((int)value.X, (int)value.Y);
          }
-         
 
          /// <summary>
          /// Returns the result of subtracting specified System.Drawing.Size from the
@@ -331,21 +287,8 @@ namespace System.Drawing
          /// </returns>
          public static Point Subtract(Point pt, Size sz)
          {
-             return new Point(pt._x - sz.Width, pt._y - sz.Height);
+             return new Point(pt.x - sz.Width, pt.y - sz.Height);
          }
-        
-
-         /// <summary>
-         /// Converts this System.Drawing.Point to a human-readable string.
-         /// </summary>
-         /// <returns>
-         /// A string that represents this System.Drawing.Point.
-         /// </returns>
-         public override string ToString()
-         {
-             return string.Format("{0} {1}", _x, _y);
-         }
-       
 
          /// <summary>
          /// Converts the specified System.Drawing.PointF to a System.Drawing.Point by
@@ -361,7 +304,70 @@ namespace System.Drawing
          {
              return new Point((int)value.X, (int)value.Y);
          }
+
+         /// <summary>
+         /// Specifies whether this System.Drawing.Point contains the same coordinates
+         /// as the specified System.Object.
+         /// </summary>
+         /// <param name="obj">
+         /// The System.Object to test.
+         /// </param>
+         /// <returns>
+         /// true if obj is a System.Drawing.Point and has the same coordinates as this
+         /// System.Drawing.Point.
+         /// </returns>
+         public override bool Equals(object obj)
+         {
+             return this.x == ((Point)obj).x && this.y == ((Point)obj).y;
+         }
+
+         /// <summary>
+         /// Returns a hash code for this System.Drawing.Point.
+         /// </summary>
+         /// <returns>
+         /// An integer value that specifies a hash value for this System.Drawing.Point.
+         /// </returns>
+         public override int GetHashCode()
+         {
+             return base.GetHashCode();
+         }
+
+         /// <summary>
+         /// Translates this System.Drawing.Point by the specified System.Drawing.Point.
+         /// </summary>
+         /// <param name="p">
+         /// The System.Drawing.Point used offset this System.Drawing.Point.
+         /// </param>
+         public void Offset(Point p)
+         {
+             this.x += p.x;
+             this.y += p.y;
+         }
+
+         /// <summary>
+         /// Translates this System.Drawing.Point by the specified amount.
+         /// </summary>
+         /// <param name="dx">
+         /// The amount to offset the x-coordinate.
+         /// </param>
+         /// <param name="dy">
+         /// The amount to offset the y-coordinate.
+         /// </param>
+         public void Offset(int dx, int dy)
+         {
+             this.x += dx;
+             this.y += dy;
+         }
+
+         /// <summary>
+         /// Converts this System.Drawing.Point to a human-readable string.
+         /// </summary>
+         /// <returns>
+         /// A string that represents this System.Drawing.Point.
+         /// </returns>
+         public override string ToString()
+         {
+             return string.Format("{0} {1}", this.x, this.y);
+         }
      }
  }
-
-#endif

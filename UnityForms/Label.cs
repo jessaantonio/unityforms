@@ -9,21 +9,14 @@
 
 namespace UnityForms
 {
-    using System;
     using UnityEngine;
 
     public class Label : Control
     {
-        #region Public Events
-
         public event MouseEventHandler MouseClick;
 
         public event MouseEventHandler DoubleClick;
         
-        #endregion
-
-        #region Protected Properties
-
         public new bool AutoSize
         {
             get { return base.AutoSize; }
@@ -35,10 +28,6 @@ namespace UnityForms
             get { return Content.image; }
             set { Content.image = value; }
         }
-
-        #endregion
-
-        #region Implements Control
 
         protected override void DrawControl()
         {
@@ -88,7 +77,5 @@ namespace UnityForms
                 }
             }
         }
-
-        #endregion
     }
 }

@@ -12,33 +12,36 @@ namespace UnityForms
     using System;
     using UnityEngine;
 
-    public class Toolbar : ContainerControl
+    public class Toolbar : ToolContainerControl
     {
         private int selectedTool = 0;
-        private GUIContent[] contents;
 
         public Texture Image
         {
-            get { return Content.image; }
-            set { Content.image = value; }
+            get
+            {
+                return Content.image;
+            }
+
+            set
+            {
+                Content.image = value;
+            }
         }
 
         protected override void DrawControl()
         {
-            if (this.contents == null)
-            {
-                this.contents = this.GetTools();
-            }
-
+            GUIContent[] contents = GetTools();
+            
             int selected;
 
             if (Style != null)
             {
-                selected = GUI.Toolbar(ControlRect, this.selectedTool, this.contents, Style);
+                selected = GUI.Toolbar(ControlRect, this.selectedTool, contents, Style);
             }
             else
             {
-                selected = GUI.Toolbar(ControlRect, this.selectedTool, this.contents);
+                selected = GUI.Toolbar(ControlRect, this.selectedTool, contents);
             }
 
             if (selected != this.selectedTool)
@@ -48,37 +51,14 @@ namespace UnityForms
             }
         }
 
-        //protected override void Initialize()
-        //{
-        //    this.tools.InitializeControl(this.ParentForm, null);
-        //}
-
-        public override Control Add(Control control)
+        public override void InitializeControl(Form parentForm, ContainerControl parent)
         {
-            if (control is ToolButton)
+            if (parent is ToolContainerControl)
             {
-                return base.Add(control);
+                base.InitializeControl(parentForm, parent);
             }
 
-            throw new ArgumentException("the control must be a ToolButton", "control");
-        }
-
-        public Control Add(ToolButton control)
-        {
-            return base.Add(control);
-        }
-
-        private GUIContent[] GetTools()
-        {
-            GUIContent[] tools = new GUIContent[Controls.Count];
-            int i = 0;
-
-            foreach (ToolButton button in Controls)
-            {
-                tools[i++] = button.Content;
-            }
-
-            return tools;
+            throw new ArgumentException("El contenedor solo puede ser un ToolContainerControl", "parent");
         }
     }
 }

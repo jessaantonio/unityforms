@@ -9,11 +9,20 @@
 
 namespace UnityForms
 {
+    using System.Collections.Generic;
     using UnityEngine;
 
-    public class ListBox : ListControl
+    public class ListBox : ListContainerControl
     {
         private Vector2 scrollPosition;
+
+        public List<Control>Items
+        {
+            get
+            {
+                return Controls;
+            }
+        }
 
         public override GUIStyle Style
         {

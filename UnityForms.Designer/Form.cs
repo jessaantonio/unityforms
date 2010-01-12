@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using System.ComponentModel.Design;
-using UnityEngine;
-
-namespace UnityForms
+﻿namespace UnityForms
 {
-  
+    using System.ComponentModel;
+    using System.Drawing;
+    using UnityEngine;
+
     [DesignTimeVisible(false), ToolboxItem(false)]
     public class Form : System.Windows.Forms.UserControl
     {
@@ -64,8 +58,6 @@ namespace UnityForms
             components = new System.ComponentModel.Container();
 
             InitializeComponent();
-
-            
         }
 
         public virtual void Initialize()
@@ -87,10 +79,11 @@ namespace UnityForms
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -112,9 +105,5 @@ namespace UnityForms
         }
 
         #endregion
-
-        
-
-      
     }
 }

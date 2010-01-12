@@ -8,7 +8,6 @@
     [Designer(typeof(ControlDesginer))]
     public class Control : System.Windows.Forms.Control
     {
-
         [UnityFormAttribute()]
         [Browsable(true)]
         public event EventHandler MouseOver;

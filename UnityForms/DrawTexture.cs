@@ -20,26 +20,54 @@ namespace UnityForms
       
         public Texture Image
         {
-            get { return this.image; }
-            set { this.image = value; }
+            get
+            {
+                return this.image;
+            }
+
+            set
+            {
+                this.image = value;
+            }
         }
 
         public ScaleMode ScaleMode
         {
-            get { return this.scaleMode; }
-            set { this.scaleMode = value; }
+            get
+            {
+                return this.scaleMode;
+            }
+
+            set
+            {
+                this.scaleMode = value;
+            }
         }
 
         public bool AlphaBlend
         {
-            get { return this.alphaBlend; }
-            set { this.alphaBlend = value; }
+            get
+            {
+                return this.alphaBlend;
+            }
+
+            set
+            {
+                this.alphaBlend = value;
+            }
         }
 
         public float ImageAspect
         {
-            get { return this.imageAspect; }
-            set { this.imageAspect = value; }
+            get
+            {
+                return this.imageAspect;
+            }
+
+            set
+            {
+                this.imageAspect = value;
+            }
         }
 
         protected override void DrawControl()

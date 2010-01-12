@@ -10,12 +10,9 @@
 namespace UnityForms
 {
     using System;
-    using UnityEngine;
 
     public class HorizontalScrollbar : Control
     {
-        #region Private variables
-
         private float value = 0;
 
         private ValueType valueType = ValueType.Float;
@@ -26,15 +23,7 @@ namespace UnityForms
 
         private float min = 0;
 
-        #endregion
-
-        #region Public Events
-
         public event EventHandler ValueChanged;
-
-        #endregion
-
-        #region Public Properties
 
         public float Value
         {
@@ -78,10 +67,6 @@ namespace UnityForms
             set { this.min = value; }
         }
 
-        #endregion
-
-        #region Protected Methods
-
         protected override void DrawControl()
         {
             float val;
@@ -114,7 +99,5 @@ namespace UnityForms
                 this.Value = val;
             }
         }
-
-        #endregion
     }
 }

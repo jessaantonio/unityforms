@@ -9,13 +9,11 @@
 
 namespace UnityForms
 {
-    using System;
     using UnityEngine;
 
-    public class SelectionGrid : ContainerControl
+    public class SelectionGrid : ToolContainerControl
     {
         private int selectedTool = 0;
-        private GUIContent[] contents;
         private int columns = 1;
 
         public int Columns
@@ -30,42 +28,19 @@ namespace UnityForms
             set { Content.image = value; }
         }
 
-        public override Control Add(Control control)
-        {
-            if (control is ToolButton)
-            {
-                return base.Add(control);
-            }
-
-            throw new ArgumentException("the control must be a ToolButton", "control");
-        }
-
-        public Control Add(ToolButton control)
-        {
-            return base.Add(control);
-        }
-
-        //protected override void Initialize()
-        //{
-        //    this.tools.InitializeControl(this.ParentForm, null);
-        //}
-
         protected override void DrawControl()
         {
-            if (this.contents == null)
-            {
-                this.contents = this.GetTools();
-            }
+            GUIContent[] contents = GetTools();
 
             int selected;
 
             if (Style != null)
             {
-                selected = GUI.SelectionGrid(ControlRect, this.selectedTool, this.contents, this.columns, Style);
+                selected = GUI.SelectionGrid(ControlRect, this.selectedTool, contents, this.columns, Style);
             }
             else
             {
-                selected = GUI.SelectionGrid(ControlRect, this.selectedTool, this.contents, this.columns);
+                selected = GUI.SelectionGrid(ControlRect, this.selectedTool, contents, this.columns);
             }
 
             if (selected != this.selectedTool)
@@ -73,19 +48,6 @@ namespace UnityForms
                 this.selectedTool = selected;
                 ((ToolButton)Controls[this.selectedTool]).RaiseButtonClickEvent(this, (MouseButton)Event.current.button, this.selectedTool);
             }
-        }
-
-        private GUIContent[] GetTools()
-        {
-            GUIContent[] tools = new GUIContent[Controls.Count];
-            int i = 0;
-
-            foreach (ToolButton button in Controls)
-            {
-                tools[i++] = button.Content;
-            }
-
-            return tools;
         }
     }
 }

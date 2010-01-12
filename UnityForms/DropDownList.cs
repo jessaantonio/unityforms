@@ -7,6 +7,8 @@
 // <version>$Revision: 1 $</version>
 //----------------------------------------------------------------------
 
+using System.Collections.Generic;
+
 namespace UnityForms
 {
     using System;
@@ -15,10 +17,8 @@ namespace UnityForms
     /// <summary>
     /// Lista despeglable
     /// </summary>
-    public class DropDownList : ListControl
+    public class DropDownList : ListContainerControl
     {
-        #region Private Variables
-
         /// <summary>
         /// Estilo de la caja que muestra la lista de items
         /// </summary>
@@ -34,9 +34,13 @@ namespace UnityForms
         /// </summary>
         private bool dropDown = false;
 
-        #endregion
-
-        #region public Properties
+        public List<Control> Items
+        {
+            get
+            {
+                return Controls;
+            }
+        }
 
         /// <summary>
         /// Gets or set el estilo del control que muestra el item seleccionado
@@ -79,10 +83,6 @@ namespace UnityForms
                 this.boxStyle = value;
             }
         }
-
-        #endregion
-
-        #region Protected Methods
 
         /// <summary>
         /// Dibujamos el control GUI
@@ -161,10 +161,6 @@ namespace UnityForms
             }
         }
 
-        #endregion
-
-        #region Private Methods
-
         /// <summary>
         /// Obtenemos el titulo que se mostrará en el el texto, se obtiene de unir todos 
         /// los items seleccionados
@@ -184,7 +180,5 @@ namespace UnityForms
 
             return caption;
         }
-
-        #endregion
     }
 }

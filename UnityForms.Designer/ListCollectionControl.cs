@@ -8,25 +8,25 @@ namespace UnityForms
     [Designer(typeof(ListItemCollectionControlDesigner))]
     public class ListItemCollectionControl : Control
     {
-        protected ListItemCollection _items;
-        protected ListItem _highlightedItem;
+        protected ListItemCollection items;
+        protected ListItem highlightedItem;
 
         public ListItemCollectionControl()
         {
             SetStyle(System.Windows.Forms.ControlStyles.DoubleBuffer, true);
             SetStyle(System.Windows.Forms.ControlStyles.AllPaintingInWmPaint, true);
 
-            this._items = new ListItemCollection(this);
+            this.items = new ListItemCollection(this);
         }
 
         [UnityFormAttribute()]
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public ListItemCollection Items
+        public new ListItemCollection Items
         {
             get
             {
-                return this._items;
+                return this.items;
             }
         }
 
@@ -36,32 +36,30 @@ namespace UnityForms
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
         {
-            CalculateBounds(e);
+            this.CalculateBounds(e);
 
-            foreach (ListItem item in this._items)
+            foreach (ListItem item in this.items)
             {
                 Rectangle area = new Rectangle(item.Bounds.Location, item.Bounds.Size);
-                PaintLibrary.Label(e, area, item.Text, new Font("Arial", 14), StringAlignment.Near, StringAlignment.Center, Color.Black, _highlightedItem == item);
+                PaintLibrary.Label(e, area, item.Text, new Font("Arial", 14), StringAlignment.Near, StringAlignment.Center, Color.Black, this.highlightedItem == item);
             }
-
         }
 
         protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e)
         {
             Rectangle wrct;
             ISelectionService s;
-            ArrayList a;
 
             if (DesignMode)
             {
-                foreach (ListItem item in Items)
+                foreach (ListItem item in this.Items)
                 {
                     wrct = item.Bounds;
+
                     if (wrct.Contains(e.X, e.Y))
                     {
                         s = (ISelectionService)GetService(typeof(ISelectionService));
-                        a = new ArrayList();
-                        a.Add(item);
+                        ArrayList a = new ArrayList { item };
                         s.SetSelectedComponents(a);
                         break;
                     }
@@ -77,7 +75,7 @@ namespace UnityForms
             ISelectionService s = (ISelectionService)GetService(typeof(ISelectionService));
 
             // See if the primary selection is one of our buttons
-            foreach (ListItem item in _items)
+            foreach (ListItem item in this.items)
             {
                 if (s.PrimarySelection == item)
                 {
@@ -87,14 +85,11 @@ namespace UnityForms
             }
 
             // Apply if necessary
-            if (newHighlightedItem != _highlightedItem)
+            if (newHighlightedItem != this.highlightedItem)
             {
-                _highlightedItem = newHighlightedItem;
+                this.highlightedItem = newHighlightedItem;
                 Invalidate();
             }
         }
-
     }
-
-
 }

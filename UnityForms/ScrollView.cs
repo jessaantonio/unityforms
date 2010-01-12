@@ -9,19 +9,12 @@
 
 namespace UnityForms
 {
-    using System;
     using UnityEngine;
     
     public class ScrollView : ContainerControl
     {
-        #region Private Variables
-
         private Vector2 scrollPosition;
         private Rect viewRect;
-
-        #endregion
-
-        #region Public Properties
 
         public Vector2 ScrollPosition
         {
@@ -35,19 +28,15 @@ namespace UnityForms
             set { this.viewRect = value; }
         }
 
-        #endregion
-
-        #region Implements
-
         protected override void DrawControl()
         {
             if (Style != null)
             {
-                UnityEngine.GUI.BeginScrollView(ControlRect, this.scrollPosition, this.viewRect, Style, Style);
+                GUI.BeginScrollView(ControlRect, this.scrollPosition, this.viewRect, Style, Style);
             }
             else
             {
-                UnityEngine.GUI.BeginScrollView(ControlRect, this.scrollPosition, this.viewRect);
+                GUI.BeginScrollView(ControlRect, this.scrollPosition, this.viewRect);
             }
 
             if (Controls != null)
@@ -58,9 +47,7 @@ namespace UnityForms
                 }
             }
 
-            UnityEngine.GUI.EndScrollView();
+            GUI.EndScrollView();
         }
-
-        #endregion
     }
 }
