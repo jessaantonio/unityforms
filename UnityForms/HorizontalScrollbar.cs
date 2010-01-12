@@ -1,0 +1,120 @@
+﻿//-----------------------------------------------------------------------
+// <copyright file="HorizontalScrollbar.cs" company="Marcelo Roca">
+//     Copyright (c) 2009-2010 Marcelo Roca. All rights reserved.
+// </copyright>
+// <license see="prj:///doc/license.txt"/>
+// <author name="Marcelo Roca" email="marcelo.roca.urioste@gmail.com"/>
+// <version>$Revision: 1 $</version>
+//----------------------------------------------------------------------
+
+namespace UnityForms
+{
+    using System;
+    using UnityEngine;
+
+    public class HorizontalScrollbar : Control
+    {
+        #region Private variables
+
+        private float value = 0;
+
+        private ValueType valueType = ValueType.Float;
+
+        private float visibleSize = 0;
+
+        private float max = 100;
+
+        private float min = 0;
+
+        #endregion
+
+        #region Public Events
+
+        public event EventHandler ValueChanged;
+
+        #endregion
+
+        #region Public Properties
+
+        public float Value
+        {
+            get 
+            {
+                return this.value; 
+            }
+
+            set 
+            {
+                this.value = value;
+
+                if (this.ValueChanged != null)
+                {
+                    this.ValueChanged(this, new EventArgs());
+                }
+            }
+        }
+
+        public ValueType ValueType
+        {
+            get { return this.valueType; }
+            set { this.valueType = value; }
+        }
+
+        public float VisibleSize
+        {
+            get { return this.visibleSize; }
+            set { this.visibleSize = value; }
+        }
+
+        public float Max
+        {
+            get { return this.max; }
+            set { this.max = value; }
+        }
+
+        public float Min
+        {
+            get { return this.min; }
+            set { this.min = value; }
+        }
+
+        #endregion
+
+        #region Protected Methods
+
+        protected override void DrawControl()
+        {
+            float val;
+
+            if (this.ValueType == ValueType.Float)
+            {
+                if (this.Style != null)
+                {
+                    val = UnityEngine.GUI.HorizontalScrollbar(this.ControlRect, this.Value, this.VisibleSize, this.Min, this.Max, this.Style);
+                }
+                else
+                {
+                    val = UnityEngine.GUI.HorizontalScrollbar(this.ControlRect, this.Value, this.VisibleSize, this.Min, this.Max);
+                }
+            }
+            else
+            {
+                if (this.Style != null)
+                {
+                    val = UnityEngine.GUI.HorizontalScrollbar(this.ControlRect, (int)this.Value, this.VisibleSize, this.Min, this.Max, this.Style);
+                }
+                else
+                {
+                    val = UnityEngine.GUI.HorizontalScrollbar(this.ControlRect, (int)this.Value, this.VisibleSize, this.Min, this.Max);
+                }
+            }
+
+            if (val != this.Value)
+            {
+                this.Value = val;
+            }
+        }
+
+        #endregion
+    }
+}
