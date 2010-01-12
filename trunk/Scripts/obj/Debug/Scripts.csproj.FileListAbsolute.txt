@@ -1,0 +1,5 @@
+E:\GalaxyParks\SourceCode\UnityFormsLibrary\Scripts\bin\Debug\Scripts.dll
+E:\GalaxyParks\SourceCode\UnityFormsLibrary\Scripts\bin\Debug\Scripts.pdb
+E:\GalaxyParks\SourceCode\UnityFormsLibrary\Scripts\obj\Debug\ResolveAssemblyReference.cache
+E:\GalaxyParks\SourceCode\UnityFormsLibrary\Scripts\obj\Debug\Scripts.dll
+E:\GalaxyParks\SourceCode\UnityFormsLibrary\Scripts\obj\Debug\Scripts.pdb

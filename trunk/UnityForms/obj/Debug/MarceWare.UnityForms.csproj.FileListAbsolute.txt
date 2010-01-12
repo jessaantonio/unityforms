@@ -1,0 +1,15 @@
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\MarceWare.UnityForms.dll
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\MarceWare.UnityForms.pdb
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\obj\Debug\ResolveAssemblyReference.cache
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\obj\Debug\MarceWare.UnityForms.dll
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\obj\Debug\MarceWare.UnityForms.pdb
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\MarceWare.Logger.dll
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\UnityEditor.dll
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\UnityEngine.dll
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\MarceWare.Logger.LogWriter.dll
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\MarceWare.Types.dll
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\MarceWare.Configuration.dll
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\MarceWare.Logger.pdb
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\MarceWare.Logger.LogWriter.pdb
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\MarceWare.Types.pdb
+E:\GalaxyParks\MarceWare\MarceWare.UnityForms\bin\Debug\MarceWare.Configuration.pdb

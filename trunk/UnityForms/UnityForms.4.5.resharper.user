@@ -1,0 +1,37 @@
+<Configuration>
+  <SettingsComponent>
+    <string />
+    <integer />
+    <boolean>
+      <setting name="SolutionAnalysisEnabled">False</setting>
+    </boolean>
+  </SettingsComponent>
+  <NAntValidationSettings>
+    <NAntPath value="" />
+  </NAntValidationSettings>
+  <RecentFiles>
+    <RecentFiles>
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:EmptyForm.cs" caret="79" fromTop="3" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:CallEmptyForm.cs" caret="63" fromTop="3" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:TT2Form.cs" caret="103" fromTop="5" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:TestForm.cs" caret="107" fromTop="5" />
+    </RecentFiles>
+    <RecentEdits>
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:TT2Form.cs" caret="6666" fromTop="21" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:EmptyForm.cs" caret="5343" fromTop="119" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:EmptyForm.cs" caret="5550" fromTop="139" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:EmptyForm.cs" caret="6178" fromTop="35" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:EmptyForm.cs" caret="98" fromTop="4" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:CallEmptyForm.cs" caret="63" fromTop="3" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:EmptyForm.cs" caret="78" fromTop="3" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:TT2Form.cs" caret="100" fromTop="5" />
+      <File id="B07847B5-0C33-463B-8545-69D5A5073153/f:TestForm.cs" caret="107" fromTop="5" />
+    </RecentEdits>
+  </RecentFiles>
+  <UnitTestRunner>
+    <Providers />
+  </UnitTestRunner>
+  <UnitTestRunnerMSTest>
+    <UseTestRunConfigFromMetadataFile>False</UseTestRunConfigFromMetadataFile>
+  </UnitTestRunnerMSTest>
+</Configuration>
