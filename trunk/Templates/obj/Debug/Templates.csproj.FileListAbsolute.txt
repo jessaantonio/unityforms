@@ -1,5 +1,0 @@
-E:\GalaxyParks\SourceCode\UnityFormsLibrary\Templates\obj\Debug\ResolveAssemblyReference.cache
-E:\GalaxyParks\SourceCode\UnityFormsLibrary\Templates\bin\Debug\UnityForms.Templates.dll
-E:\GalaxyParks\SourceCode\UnityFormsLibrary\Templates\bin\Debug\UnityForms.Templates.pdb
-E:\GalaxyParks\SourceCode\UnityFormsLibrary\Templates\obj\Debug\UnityForms.Templates.dll
-E:\GalaxyParks\SourceCode\UnityFormsLibrary\Templates\obj\Debug\UnityForms.Templates.pdb

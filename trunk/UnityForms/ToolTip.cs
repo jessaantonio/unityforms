@@ -9,13 +9,10 @@
 
 namespace UnityForms
 {
-    using System;
     using UnityEngine;
 
     public class ToolTip : MonoBehaviour
     {
-        #region Private Variables
-
         private Rect position;
         private Control control;
         private bool visible = false;
@@ -24,10 +21,6 @@ namespace UnityForms
         private float delaySeconds = 3;
         private Vector2 labelSize;
         private int minWidth = 100;
-
-        #endregion
-
-        #region Public Properties
 
         public GUISkin Skin
         {
@@ -46,10 +39,6 @@ namespace UnityForms
                 this.skin = value; 
             }
         }
-
-        #endregion
-
-        #region Public Methods
 
         public void OnGUI()
         {
@@ -89,7 +78,5 @@ namespace UnityForms
             this.visible = false;
             this.control = null;
         }
-
-        #endregion
     }
 }

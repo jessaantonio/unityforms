@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace UnityForms
+﻿namespace UnityForms
 {
+    using System;
+
     public delegate void MouseEventHandler(object sender, MouseEventArgs e);
     public delegate void ToolClickEventHandler(object sender, ToolClickEventArgs e);
     public delegate void ValueChangedEventHandler(object sender, ValueChangedEventArgs e);
-
 
     public class MouseEventArgs : EventArgs
     {
@@ -22,51 +20,60 @@ namespace UnityForms
             _mouseButton = mouseButton;
         }
     }
-
   
     public class ToolClickEventArgs : EventArgs
     {
-        private MouseButton _mouseButton;
-        private ToolButton _tool;
-        private int _index;
+        private MouseButton mouseButton;
+        private ToolButton tool;
+        private int index;
 
         public MouseButton MouseButton
         {
-            get { return _mouseButton; }
+            get
+            {
+                return this.mouseButton;
+            }
         }
 
         public int Index
         {
-            get { return _index; }
+            get
+            {
+                return this.index;
+            }
         }
 
         public ToolButton Tool
         {
-            get { return _tool; }
+            get
+            {
+                return this.tool;
+            }
         }
 
         public ToolClickEventArgs(MouseButton mouseButton, ToolButton tool, int index)
         {
-            _mouseButton = mouseButton;
-            _tool = tool;
-            _index = index;
+            this.mouseButton = mouseButton;
+            this.tool = tool;
+            this.index = index;
         }
     }
 
     public class ValueChangedEventArgs : EventArgs
     {
-        private object _value;
+        private object value;
 
         public object Value
         {
-            get { return _value; }
+            get
+            {
+                return this.value;
+            }
         }
 
         public ValueChangedEventArgs(object value)
         {
-            _value = value;
+            this.value = value;
         }
     }
-
-    
 }

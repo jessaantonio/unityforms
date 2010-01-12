@@ -35,31 +35,30 @@ namespace UnityForms
             IComponentChangeService c = (IComponentChangeService)GetService(typeof(IComponentChangeService));
             ToolButton button;
             IDesignerHost h = (IDesignerHost)GetService(typeof(IDesignerHost));
-            int i;
 
             // If the user is removing a button
             if (e.Component is ToolButton)
             {
                 button = (ToolButton)e.Component;
-                if (MyControl.Tools.Contains(button))
+                if (this.MyControl.Tools.Contains(button))
                 {
-                    c.OnComponentChanging(MyControl, null);
-                    MyControl.Tools.Remove(button);
-                    c.OnComponentChanged(MyControl, null, null, null);
+                    c.OnComponentChanging(this.MyControl, null);
+                    this.MyControl.Tools.Remove(button);
+                    c.OnComponentChanged(this.MyControl, null, null, null);
                     return;
                 }
             }
 
             // If the user is removing the control itself
-            if (e.Component == MyControl)
+            if (e.Component == this.MyControl)
             {
-                for (i = MyControl.Tools.Count - 1; i >= 0; i--)
+                for (int i = this.MyControl.Tools.Count - 1; i >= 0; i--)
                 {
-                    button = MyControl.Tools[i];
-                    c.OnComponentChanging(MyControl, null);
-                    MyControl.Tools.Remove(button);
+                    button = this.MyControl.Tools[i];
+                    c.OnComponentChanging(this.MyControl, null);
+                    this.MyControl.Tools.Remove(button);
                     h.DestroyComponent(button);
-                    c.OnComponentChanged(MyControl, null, null, null);
+                    c.OnComponentChanged(this.MyControl, null, null, null);
                 }
             }
         }
@@ -70,8 +69,8 @@ namespace UnityForms
             IComponentChangeService c = (IComponentChangeService)GetService(typeof(IComponentChangeService));
 
             // Unhook events
-            s.SelectionChanged -= new EventHandler(OnSelectionChanged);
-            c.ComponentRemoving -= new ComponentEventHandler(OnComponentRemoving);
+            s.SelectionChanged -= this.OnSelectionChanged;
+            c.ComponentRemoving -= this.OnComponentRemoving;
 
             base.Dispose(disposing);
         }
@@ -84,20 +83,21 @@ namespace UnityForms
             }
         }
 
-        public override System.ComponentModel.Design.DesignerVerbCollection Verbs
+        public override DesignerVerbCollection Verbs
         {
             get
             {
-                DesignerVerbCollection v = new DesignerVerbCollection();
+                DesignerVerbCollection v = new DesignerVerbCollection
+                                               {
+                                                   new DesignerVerb("&Add Button", OnAddButton)
+                                               };
 
                 // Verb to add buttons
-                v.Add(new DesignerVerb("&Add Button", new EventHandler(OnAddButton)));
-
                 return v;
             }
         }
 
-        private void OnAddButton(object sender, System.EventArgs e)
+        private void OnAddButton(object sender, EventArgs e)
         {
             ToolButton button;
             IDesignerHost h = (IDesignerHost)GetService(typeof(IDesignerHost));
@@ -107,10 +107,10 @@ namespace UnityForms
             // Add a new button to the collection
             dt = h.CreateTransaction("Add Button");
             button = (ToolButton)h.CreateComponent(typeof(ToolButton));
-            c.OnComponentChanging(MyControl, null);
+            c.OnComponentChanging(this.MyControl, null);
             button.Text = "button";
-            MyControl.Tools.Add(button);
-            c.OnComponentChanged(MyControl, null, null, null);
+            this.MyControl.Tools.Add(button);
+            c.OnComponentChanged(this.MyControl, null, null, null);
             dt.Commit();
         }
 
@@ -118,13 +118,15 @@ namespace UnityForms
         {
             Rectangle wrct;
 
-            point = MyControl.PointToClient(point);
+            point = this.MyControl.PointToClient(point);
 
-            foreach (ToolButton button in MyControl.Tools)
+            foreach (ToolButton button in this.MyControl.Tools)
             {
                 wrct = button.Bounds;
                 if (wrct.Contains(point))
+                {
                     return true;
+                }
             }
 
             return false;

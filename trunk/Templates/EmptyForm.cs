@@ -34,18 +34,6 @@ public class EmptyForm : Form
     /// </summary>
     private void InitializeComponent()
     {
-        this.SuspendLayout();
-        // 
-        // EmptyForm
-        // 
-        this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        this.Draggable = true;
-        this.Name = "EmptyForm";
-        this.Size = new System.Drawing.Size(301, 247);
-        this.WindowMode = UnityForms.WindowMode.Window;
-        this.ResumeLayout(false);
-
     }
 
     #endregion

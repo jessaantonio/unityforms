@@ -15,14 +15,25 @@ namespace UnityForms
 
     public abstract class Control
     {
-        #region Private Variables
-
-        private Rect controlRect;
-
         /// <summary>
         /// Identificador del control (valor único)
         /// </summary>
         private readonly string id = Guid.NewGuid().ToString();
+
+        /// <summary>
+        /// Especifica si el componente es draggable
+        /// </summary>
+        private bool draggable = false;
+
+        /// <summary>
+        /// La ubicación y tamaño del control
+        /// </summary>
+        private Rect controlRect;
+
+        /// <summary>
+        /// Indica si el dibujado del control está suspendido
+        /// </summary>
+        private bool suspendedLayout;
 
         /// <summary>
         /// Nombre del control
@@ -107,10 +118,6 @@ namespace UnityForms
         /// </summary>
         private VerticalAlignment verticalAlignment = VerticalAlignment.Manual;
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>
         /// Cuando el cursor del mouse está encima
         /// </summary>
@@ -126,9 +133,95 @@ namespace UnityForms
         /// </summary>
         public event EventHandler Resize;
 
-        #endregion
+        /// <summary>
+        /// Gets or sets Size of the control.
+        /// </summary>
+        public virtual Size Size
+        {
+            get
+            {
+                // TODO verificar si esto esta bien o comos erá el autosize
+                if (this.invalidated)
+                {
+                    this.ResizeControl();
+                    this.invalidated = false;
+                }
 
-        #region public Properties
+                return new Size((int)this.controlRect.width, (int)this.controlRect.height);
+            }
+
+            set
+            {
+                if (new Size((int)this.controlRect.width, (int)this.controlRect.height) != value)
+                {
+                    this.controlRect = new Rect(this.controlRect.x, this.controlRect.y, value.Width, value.Height);
+                    this.invalidated = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// used in internal operations
+        /// </summary>
+        protected Size __Size
+        {
+            get
+            {
+                return new Size((int)this.controlRect.width, (int)this.controlRect.height);
+            }
+
+            set
+            {
+                this.controlRect = new Rect(this.controlRect.x, this.controlRect.y, value.Width, value.Height);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets Location.
+        /// </summary>
+        public Point Location
+        {
+            get
+            {
+                return new Point((int)this.controlRect.x, (int)this.controlRect.y);
+            }
+
+            set
+            {
+                Rect r = new Rect(value.X, value.Y, this.controlRect.width, this.controlRect.height);
+
+                if (r != this.controlRect)
+                {
+                    this.controlRect = r;
+                    this.invalidated = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// used in internal operations
+        /// </summary>
+        protected Point __Location
+        {
+            get
+            {
+                return new Point((int)this.controlRect.x, (int)this.controlRect.y);
+            }
+
+            set
+            {
+                this.controlRect = new Rect(value.X, value.Y, this.controlRect.width, this.controlRect.height);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether Draggable.
+        /// </summary>
+        public bool Draggable
+        {
+            get { return this.draggable; }
+            set { this.draggable = value; }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether ShowToolTip needs to show or not.
@@ -259,7 +352,10 @@ namespace UnityForms
         /// </summary>
         public string ID
         {
-            get { return this.id; }
+            get
+            {
+                return this.id;
+            }
         }
 
         /// <summary>
@@ -267,8 +363,15 @@ namespace UnityForms
         /// </summary>
         public string ToolTip
         {
-            get { return this.tooltip; }
-            set { this.tooltip = value; }
+            get
+            {
+                return this.tooltip;
+            }
+
+            set
+            {
+                this.tooltip = value;
+            }
         }
 
         /// <summary>
@@ -276,56 +379,14 @@ namespace UnityForms
         /// </summary>
         public object Tag
         {
-            get { return this.tag; }
-            set { this.tag = value; }
-        }
-
-        /// <summary>
-        /// Gets or sets Size of the control.
-        /// </summary>
-        public virtual Size Size
-        {
             get
             {
-                // TODO verificar si esto esta bien o comos erá el autosize
-                if (this.invalidated)
-                {
-                    this.ResizeControl();
-                    this.invalidated = false;
-                }
-
-                return new Size((int)this.controlRect.width, (int)this.controlRect.height);
+                return this.tag;
             }
 
             set
             {
-                if (new Size((int)this.controlRect.width, (int)this.controlRect.height) != value)
-                {
-                    this.controlRect = new Rect(this.controlRect.x, this.controlRect.y, value.Width, value.Height);
-                    this.invalidated = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets Location.
-        /// </summary>
-        public Point Location
-        {
-            get
-            {
-                return new Point((int)this.controlRect.x, (int)this.controlRect.y);
-            }
-
-            set
-            {
-                Rect r = new Rect(value.X, value.Y, this.controlRect.width, this.controlRect.height);
-
-                if (r != this.controlRect)
-                {
-                    this.controlRect = r;
-                    this.invalidated = true;
-                }
+                this.tag = value;
             }
         }
 
@@ -386,8 +447,6 @@ namespace UnityForms
 
             private set
             {
-               
-
                 if (this.parent == value)
                 {
                     return;
@@ -404,7 +463,6 @@ namespace UnityForms
                     this.parent.Removes(this);
                     this.parent = value;
                     this.parent.Add(this);
-                    
 
                     if (this is ContainerControl)
                     {
@@ -435,12 +493,12 @@ namespace UnityForms
                 {
                     return;
                 }
-                
+
                 if (this.parentForm == null)
                 {
                     this.parentForm = value;
                 }
-                else 
+                else
                 {
                     this.SuspendLayout();
 
@@ -493,10 +551,6 @@ namespace UnityForms
             }
         }
 
-        #endregion
-
-        #region internal properties
-
         internal string TypeName
         {
             get
@@ -505,23 +559,19 @@ namespace UnityForms
             }
         }
 
-        #endregion
-
-        #region Protected Properties
-
         /// <summary>
-        /// used in internal operations
+        /// Gets or sets a value indicating whether SuspendedLayout.
         /// </summary>
-        protected Size __Size
+        protected bool SuspendedLayout
         {
             get
             {
-                return new Size((int)this.controlRect.width, (int)this.controlRect.height);
+                return this.suspendedLayout;
             }
 
             set
             {
-                this.controlRect = new Rect(this.controlRect.x, this.controlRect.y, value.Width, value.Height);
+                this.suspendedLayout = value;
             }
         }
 
@@ -583,11 +633,7 @@ namespace UnityForms
             }
         }
 
-        #endregion
-
-        #region Public Methods
-
-        public void InitializeControl(Form parentForm, ContainerControl parent)
+        public virtual void InitializeControl(Form parentForm, ContainerControl parent)
         {
             this.Parent = parent;
             this.ParentForm = parentForm;
@@ -595,6 +641,36 @@ namespace UnityForms
             this.Initialize();
         }
 
+        /// <summary>
+        /// Begins a drag-and-drop operation.
+        /// </summary>
+        /// <remarks>
+        /// The allowedEffects parameter determines which drag operations can 
+        /// occur. If the drag operation needs to interoperate with applications in 
+        /// another process, data should either be a base managed class (String, Bitmap, 
+        /// or Metafile), or an object that implements ISerializable or IDataObject.
+        /// </remarks>
+        /// <param name="data">
+        /// The control to drag. 
+        /// </param>
+        /// <param name="allowedEffects">
+        /// One of the DragDropEffects values.
+        /// </param>
+        /// <returns>
+        /// A value from the DragDropEffects enumeration that represents the 
+        /// final effect that was performed during the drag-and-drop operation.
+        /// </returns>
+        public DragDropEffects DoDragDrop(Control data, DragDropEffects allowedEffects)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Mueve un control desde un contenedor a otro
+        /// </summary>
+        /// <param name="container">
+        /// El nuevo contenedor
+        /// </param>
         public void Move(ContainerControl container)
         {
             if (container == null)
@@ -605,10 +681,6 @@ namespace UnityForms
             this.ParentForm = container.ParentForm;
             this.Parent = container;
         }
-
-        #endregion
-
-        #region Internal Methods
 
         internal void OnGUI()
         {
@@ -644,10 +716,6 @@ namespace UnityForms
             this.Focus = true;
         }
 
-        #endregion
-
-        #region Abstract & Virtual Methods
-
         protected abstract void DrawControl();
 
         protected virtual void Initialize()
@@ -656,23 +724,6 @@ namespace UnityForms
 
         protected virtual void ResizeControl()
         {
-        }
-
-        #endregion
-
-        private bool suspendedLayout;
-
-        protected bool SuspendedLayout
-        {
-            get
-            {
-                return this.suspendedLayout;
-            }
-
-            set
-            {
-                this.suspendedLayout = value; 
-            }
         }
 
         protected void SuspendLayout()
@@ -684,8 +735,6 @@ namespace UnityForms
         {
             this.SuspendedLayout = false;
         }
-
-        #region Private Methods
 
         private void PerformLayout()
         {
@@ -738,7 +787,5 @@ namespace UnityForms
                 }
             }
         }
-
-        #endregion
     }
 }

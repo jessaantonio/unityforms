@@ -7,6 +7,6 @@
 // <version>$Revision: 1 $</version>
 //----------------------------------------------------------------------
 
-public class UnityForms_MessageBox : UnityForms.MessageBox 
+internal class UnityForms_MessageBox : UnityForms.MessageBox 
 {
 }

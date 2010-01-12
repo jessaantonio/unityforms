@@ -1,15 +1,10 @@
-﻿
-using System;
-using System.Drawing;
-using System.ComponentModel;
-
-
-namespace UnityForms
+﻿namespace UnityForms
 {
+    using System.ComponentModel;
+
     [DesignTimeVisible(true), ToolboxItem(true)]
     public class Box : Control
     {
-
         [UnityFormAttribute()]
         [Browsable(true)]
         public event MouseEventHandler MouseClick;

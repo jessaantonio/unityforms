@@ -15,15 +15,9 @@ namespace UnityForms
 
     public static class FormsManager
     {
-        #region Private Variables
-
         private static Dictionary<string, Form> formList = new Dictionary<string, Form>();
         private static Stack<string> formStack = new Stack<string>();
         private static int windowsCount = 0;
-
-        #endregion
-
-        #region Public Methods
 
         public static Form LoadForm(GameObject gameObject, Type formType, GUISkin defaultSkin)
         {
@@ -50,10 +44,6 @@ namespace UnityForms
             form.OnClose();
             formList.Remove(form.ID);
         }
-
-        #endregion
-
-        #region Internal Methods
 
         internal static int NewWindowID()
         {
@@ -102,7 +92,5 @@ namespace UnityForms
                 formList[formStack.Peek()].Disabled = DisableMode.None;
             }
         }
-
-        #endregion
     }
 }

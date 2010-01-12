@@ -14,25 +14,15 @@ namespace UnityForms
 
     public class RepeatButton : Control
     {
-        #region Events
-
         public event EventHandler Click;
 
         public event MouseEventHandler MouseClick;
-
-        #endregion
-
-        #region Public Properties
 
         public Texture Image
         {
             get { return Content.image; }
             set { Content.image = value; }
         }
-
-        #endregion
-
-        #region Implements Control
 
         protected override void DrawControl()
         {
@@ -65,7 +55,5 @@ namespace UnityForms
                 }
             }
         }
-
-        #endregion
     }
 }

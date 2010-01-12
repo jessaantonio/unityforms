@@ -1,48 +1,120 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
-using System.ComponentModel;    
-using System.ComponentModel.Design;
-
-namespace UnityForms
+﻿namespace UnityForms
 {
+    using System.ComponentModel;
+    using System.Drawing;
+
     //[Designer(typeof(ControlDesginer))]
     public class Group : System.Windows.Forms.ScrollableControl, System.Windows.Forms.IContainerControl
-
     {
-        private System.Windows.Forms.Control _activeControl;
+        private System.Windows.Forms.Control activeControl;
 
-        private string _toolTip = "";
-        private bool _showToolTip = true;
-
-        [UnityFormAttribute()]
-        [Browsable(true)]
-        public new string Name { get { return base.Name; } set { base.Name = value; } }
+        private string toolTip = "";
+        private bool showToolTip = true;
 
         [UnityFormAttribute()]
         [Browsable(true)]
-        public new string Text { get { return base.Text; } set { base.Text = value; } }
+        public new string Name
+        {
+            get
+            {
+                return base.Name;
+            } 
+
+            set
+            {
+                base.Name = value;
+            }
+        }
 
         [UnityFormAttribute()]
         [Browsable(true)]
-        public string ToolTip { get { return _toolTip; } set { _toolTip = value; } }
+        public new string Text
+        {
+            get
+            {
+                return base.Text;
+            }
+            
+            set
+            {
+                base.Text = value;
+            }
+        }
 
         [UnityFormAttribute()]
         [Browsable(true)]
-        public new object Tag { get { return base.Tag; } set { base.Tag = value; } }
+        public string ToolTip
+        {
+            get
+            {
+                return this.toolTip;
+            } 
+            
+            set
+            {
+                this.toolTip = value;
+            }
+        }
 
         [UnityFormAttribute()]
         [Browsable(true)]
-        public new Size Size { get { return base.Size; } set { base.Size = value; } }
+        public new object Tag
+        {
+            get
+            {
+                return base.Tag;
+            } 
+            
+            set
+            {
+                base.Tag = value;
+            }
+        }
 
         [UnityFormAttribute()]
         [Browsable(true)]
-        public new Point Location { get { return base.Location; } set { base.Location = value; } }
+        public new Size Size
+        {
+            get
+            {
+                return base.Size;
+            } 
+            
+            set
+            {
+                base.Size = value;
+            }
+        }
 
         [UnityFormAttribute()]
         [Browsable(true)]
-        public bool ShowToolTip { get { return _showToolTip; } set { _showToolTip = value; } }
+        public new Point Location
+        {
+            get
+            {
+                return base.Location;
+            } 
+            
+            set
+            {
+                base.Location = value;
+            }
+        }
+
+        [UnityFormAttribute()]
+        [Browsable(true)]
+        public bool ShowToolTip
+        {
+            get
+            {
+                return this.showToolTip;
+            } 
+            
+            set
+            {
+                this.showToolTip = value;
+            }
+        }
 
 
         protected override void OnPaint(System.Windows.Forms.PaintEventArgs pe)
@@ -50,11 +122,13 @@ namespace UnityForms
             base.OnPaint(pe);
 
             Font font = new Font("Arial", 14);
-            StringFormat format = new StringFormat();
-            format.Alignment = StringAlignment.Near;
-            format.LineAlignment = StringAlignment.Near;
+            StringFormat format = new StringFormat
+                                      {
+                                          Alignment = StringAlignment.Near,
+                                          LineAlignment = StringAlignment.Near
+                                      };
 
-            pe.Graphics.DrawString(Text, font, new SolidBrush(Color.White), new Rectangle(0, 0, Size.Width, 20), format);
+            pe.Graphics.DrawString(this.Text, font, new SolidBrush(Color.White), new Rectangle(0, 0, Size.Width, 20), format);
         }
 
         #region IContainerControl Members
@@ -66,9 +140,10 @@ namespace UnityForms
                 // Select the control and scroll the control into view if needed.
                 active.Select();
                 this.ScrollControlIntoView(active);
-                this._activeControl = active;
+                this.activeControl = active;
                 return true;
             }
+
             return false;
         }
 
@@ -76,14 +151,15 @@ namespace UnityForms
         {
             get
             {
-                return _activeControl;
+                return this.activeControl;
             }
+
             set
             {
                 // Make sure the control is a member of the ControlCollection.
                 if (this.Controls.Contains(value))
                 {
-                    _activeControl = value;
+                    this.activeControl = value;
                 }
 
             }
@@ -91,6 +167,4 @@ namespace UnityForms
 
         #endregion
     }
-
-    
 }

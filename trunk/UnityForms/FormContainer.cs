@@ -14,24 +14,14 @@ namespace UnityForms
 
     public class FormContainer : ContainerControl
     {
-        #region Private variables
-
         private System.Drawing.Size size = System.Drawing.Size.Empty;
         private Rect clientRect;
-
-        #endregion
-
-        #region Public Properties
 
         public override System.Drawing.Size Size
         {
             get { return this.size; }
             set { }
         }
-
-        #endregion
-
-        #region Protected Methods
 
         protected override void DrawControl()
         {
@@ -47,10 +37,6 @@ namespace UnityForms
             this.Location = new System.Drawing.Point(0, 0);
             this.CalculateClientSize();
         }
-
-        #endregion
-
-        #region Private Methods
 
         private void CalculateClientSize()
         {
@@ -70,7 +56,5 @@ namespace UnityForms
             this.size = new System.Drawing.Size(formSize.Width - padding.horizontal, formSize.Height - padding.vertical);
             this.clientRect = new Rect(padding.left, padding.top, formSize.Width - padding.right, formSize.Height - padding.bottom);
         }
-
-        #endregion 
     }
 }

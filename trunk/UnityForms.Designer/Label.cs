@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Drawing;
-using WinForms = System.Windows.Forms;
-using System.ComponentModel;    
-using System.ComponentModel.Design;
-
-namespace UnityForms
+﻿namespace UnityForms
 {
+    using System.ComponentModel;
+    using System.Drawing;
+    using WinForms = System.Windows.Forms;
+
     [DesignTimeVisible(true), ToolboxItem(true)]
     public class Label : Control
     {
@@ -33,6 +29,4 @@ namespace UnityForms
             PaintLibrary.Label(pe, area, this.Text, new Font("Arial", 14), StringAlignment.Center, StringAlignment.Center, Color.Black, false);
         }
     }
-
-    
 }

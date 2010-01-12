@@ -10,7 +10,6 @@
 namespace UnityForms
 {
     using System;
-    using UnityEngine;
 
     public class VerticalScrollbar : Control
     {

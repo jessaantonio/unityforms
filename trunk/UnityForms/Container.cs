@@ -9,9 +9,6 @@
 
 namespace UnityForms
 {
-    using System;
-    using System.Text;
-
     /// <summary>
     /// Implements ContainerControl
     /// </summary>

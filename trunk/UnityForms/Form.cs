@@ -16,8 +16,6 @@ namespace UnityForms
 
     public abstract class Form : MonoBehaviour
     {
-        #region Private Variables
-
         private SizeF autoScaleDimensions;
         private int windowID = FormsManager.NewWindowID();
         private Dictionary<string, Control> controlDictionary = new Dictionary<string, Control>();
@@ -42,10 +40,6 @@ namespace UnityForms
         private bool layoutSuspended;
         private ToolTip toolTip;
 
-        #endregion
-
-        #region Public Properties
-
         public System.Windows.Forms.AutoScaleMode AutoScaleMode
         {
             get { return this.autoScaleMode; }
@@ -63,13 +57,13 @@ namespace UnityForms
             get { return this.controls; }
         }
 
-        public System.Drawing.SizeF AutoScaleDimensions
+        public SizeF AutoScaleDimensions
         {
             get { return this.autoScaleDimensions; }
             set { this.autoScaleDimensions = value; }
         }
 
-        public System.Drawing.Size ClientSize
+        public Size ClientSize
         {
             get { return this.clientSize; }
             set { this.clientSize = value; }
@@ -152,6 +146,9 @@ namespace UnityForms
             private set { this.formMode = value; }
         }
 
+        /// <summary>
+        /// Gets or sets Size of the form.
+        /// </summary>
         public Size Size
         {
             get
@@ -166,6 +163,9 @@ namespace UnityForms
             }
         }
 
+        /// <summary>
+        /// Gets or sets Location of the form in the screen.
+        /// </summary>
         public Point Location
         {
             get
@@ -180,6 +180,9 @@ namespace UnityForms
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the form is Enabled.
+        /// </summary>
         public bool Enabled
         {
             get
@@ -193,18 +196,31 @@ namespace UnityForms
             }
         }
 
+        /// <summary>
+        /// Gets or sets if the form is Disabled.
+        /// </summary>
+        /// <remarks>
+        /// Es utilizada internamente pos el FormsManager para hacer ventanas
+        /// modales o modeless
+        /// </remarks>
         public DisableMode Disabled
         {
             get { return this.disabled; }
             set { this.disabled = value; }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the form is Visible.
+        /// </summary>
         public bool Visible
         {
             get { return this.visible; }
             private set { this.visible = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the Skin of the control.
+        /// </summary>
         public GUISkin Skin
         {
             get
@@ -226,13 +242,16 @@ namespace UnityForms
 
             set
             {
-                this.skin = value;
+                if (value == null)
+                {
+                    this.skin = GUIUtility.GetBuiltinSkin(0);
+                }
+                else if (this.skin != value)
+                {
+                    this.skin = value;
+                }
             }
         }
-
-        #endregion
-
-        #region Protected Properties
 
         protected bool LayoutChanged
         {
@@ -269,10 +288,6 @@ namespace UnityForms
                 return this.content;
             }
         }
-
-        #endregion
-
-        #region MonoBehaviour Methods
 
         public void OnGUI()
         {
@@ -313,10 +328,6 @@ namespace UnityForms
                 this.AfterOnGUI();
             }
         }
-
-        #endregion
-
-        #region Public Methods
 
         public abstract void Initialize();
 
@@ -378,10 +389,6 @@ namespace UnityForms
             this.toolTip = (ToolTip)gameObject.AddComponent(typeof(UnityForms_ToolTip));
         }
 
-        #endregion
-
-        #region Internal Methods
-
         internal void AddDictionaryControl(Control source)
         {
             this.controlDictionary.Add(source.ID, source);
@@ -396,10 +403,6 @@ namespace UnityForms
                 this.controlDictionary.Remove(id);
             }
         }
-
-        #endregion
-
-        #region Protected Methods
 
         protected virtual void BeforeOnGUI()
         {
@@ -427,10 +430,6 @@ namespace UnityForms
         {
             this.layoutSuspended = false;
         }
-
-        #endregion
-
-        #region Private Methods
 
         private void DoWindow(int w)
         {
@@ -520,7 +519,5 @@ namespace UnityForms
                 }
             }
         }
-
-        #endregion
     }
 }

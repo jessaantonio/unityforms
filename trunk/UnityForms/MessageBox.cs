@@ -15,26 +15,16 @@ namespace UnityForms
 
     public class MessageBox : Form
     {
-        #region Private Variables
-
-        private readonly System.Drawing.Size DEFAUTFORMLSIZE = new System.Drawing.Size(400, 300);
+        private readonly Size DEFAUTFORMLSIZE = new Size(400, 300);
 
         private Button buttonAccept;
         private Label labelMessage;
-
-        #endregion
-
-        #region Public Properties
 
         public Label LabelMessage
         {
             get { return this.labelMessage; }
             set { this.labelMessage = value; }
         }
-
-        #endregion
-
-        #region Public Methods
 
         public static void Show(GameObject gameObject, string title, string message, GUISkin skin)
         {
@@ -51,18 +41,10 @@ namespace UnityForms
             form.ShowModal();
         }
 
-        #endregion
-
-        #region Implements Form
-
         public override void Initialize()
         {
             this.InitializeComponent();
         }
-
-        #endregion
-
-        #region Private Methods
 
         private void InitializeComponent()
         {
@@ -96,7 +78,5 @@ namespace UnityForms
         {
             Close();
         }
-
-        #endregion
     }
 }

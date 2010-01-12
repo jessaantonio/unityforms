@@ -1,12 +1,10 @@
-﻿using System;
-
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Drawing;
-
-
-namespace UnityForms
+﻿namespace UnityForms
 {
+    using System;
+    using System.ComponentModel;
+    using System.ComponentModel.Design;
+    using System.Drawing;
+
     internal class ListItemCollectionControlDesigner : ControlDesginer
     {
         private ListItemCollectionControl MyControl;
@@ -16,18 +14,18 @@ namespace UnityForms
             base.Initialize(component);
 
             // Record instance of control we're designing
-            MyControl = (ListItemCollectionControl)component;
+            this.MyControl = (ListItemCollectionControl)component;
 
             // Hook up events
             ISelectionService s = (ISelectionService)GetService(typeof(ISelectionService));
             IComponentChangeService c = (IComponentChangeService)GetService(typeof(IComponentChangeService));
-            s.SelectionChanged += new EventHandler(OnSelectionChanged);
-            c.ComponentRemoving += new ComponentEventHandler(OnComponentRemoving);
+            s.SelectionChanged += this.OnSelectionChanged;
+            c.ComponentRemoving += this.OnComponentRemoving;
         }
 
         private void OnSelectionChanged(object sender, System.EventArgs e)
         {
-            MyControl.OnSelectionChanged();
+            this.MyControl.OnSelectionChanged();
         }
 
         private void OnComponentRemoving(object sender, ComponentEventArgs e)
@@ -41,25 +39,25 @@ namespace UnityForms
             if (e.Component is ListItem)
             {
                 item = (ListItem)e.Component;
-                if (MyControl.Items.Contains(item))
+                if (this.MyControl.Items.Contains(item))
                 {
-                    c.OnComponentChanging(MyControl, null);
-                    MyControl.Items.Remove(item);
-                    c.OnComponentChanged(MyControl, null, null, null);
+                    c.OnComponentChanging(this.MyControl, null);
+                    this.MyControl.Items.Remove(item);
+                    c.OnComponentChanged(this.MyControl, null, null, null);
                     return;
                 }
             }
 
             // If the user is removing the control itself
-            if (e.Component == MyControl)
+            if (e.Component == this.MyControl)
             {
-                for (i = MyControl.Items.Count - 1; i >= 0; i--)
+                for (i = this.MyControl.Items.Count - 1; i >= 0; i--)
                 {
-                    item = MyControl.Items[i];
-                    c.OnComponentChanging(MyControl, null);
-                    MyControl.Items.Remove(item);
+                    item = this.MyControl.Items[i];
+                    c.OnComponentChanging(this.MyControl, null);
+                    this.MyControl.Items.Remove(item);
                     h.DestroyComponent(item);
-                    c.OnComponentChanged(MyControl, null, null, null);
+                    c.OnComponentChanged(this.MyControl, null, null, null);
                 }
             }
         }
@@ -70,8 +68,8 @@ namespace UnityForms
             IComponentChangeService c = (IComponentChangeService)GetService(typeof(IComponentChangeService));
 
             // Unhook events
-            s.SelectionChanged -= new EventHandler(OnSelectionChanged);
-            c.ComponentRemoving -= new ComponentEventHandler(OnComponentRemoving);
+            s.SelectionChanged -= this.OnSelectionChanged;
+            c.ComponentRemoving -= this.OnComponentRemoving;
 
             base.Dispose(disposing);
         }
@@ -80,24 +78,24 @@ namespace UnityForms
         {
             get
             {
-                return MyControl.Items;
+                return this.MyControl.Items;
             }
         }
 
-        public override System.ComponentModel.Design.DesignerVerbCollection Verbs
+        public override DesignerVerbCollection Verbs
         {
             get
             {
                 DesignerVerbCollection v = new DesignerVerbCollection();
 
                 // Verb to add buttons
-                v.Add(new DesignerVerb("&Add Item", new EventHandler(OnAddItem)));
+                v.Add(new DesignerVerb("&Add Item", this.OnAddItem));
 
                 return v;
             }
         }
 
-        private void OnAddItem(object sender, System.EventArgs e)
+        private void OnAddItem(object sender, EventArgs e)
         {
             ListItem item;
             IDesignerHost h = (IDesignerHost)GetService(typeof(IDesignerHost));
@@ -107,24 +105,26 @@ namespace UnityForms
             // Add a new button to the collection
             dt = h.CreateTransaction("Add Item");
             item = (ListItem)h.CreateComponent(typeof(ListItem));
-            c.OnComponentChanging(MyControl, null);
+            c.OnComponentChanging(this.MyControl, null);
             item.Text = "new item";
-            MyControl.Items.Add(item);
-            c.OnComponentChanged(MyControl, null, null, null);
+            this.MyControl.Items.Add(item);
+            c.OnComponentChanged(this.MyControl, null, null, null);
             dt.Commit();
         }
 
-        protected override bool GetHitTest(System.Drawing.Point point)
+        protected override bool GetHitTest(Point point)
         {
             Rectangle wrct;
 
-            point = MyControl.PointToClient(point);
+            point = this.MyControl.PointToClient(point);
 
-            foreach (ListItem item in MyControl.Items)
+            foreach (ListItem item in this.MyControl.Items)
             {
                 wrct = item.Bounds;
                 if (wrct.Contains(point))
+                {
                     return true;
+                }
             }
 
             return false;
