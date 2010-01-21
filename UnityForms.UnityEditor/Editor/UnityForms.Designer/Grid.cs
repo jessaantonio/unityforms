@@ -28,7 +28,15 @@ internal class Grid
 
     public void DoGUI()
     {
-        
+        GridLineListVertical.GridLines.ForEach(delegate(GridLine line)
+        {
+            line.GridLineRect.DoGUI();
+        });
+
+        GridLineListHorizontal.GridLines.ForEach(delegate(GridLine line)
+        {
+            line.GridLineRect.DoGUI();
+        });
     }
 
     private Rect _gridBounds;
@@ -107,18 +115,17 @@ internal class Grid
     {
         GridLine gridLine = new GridLine();
 
-        gridLine.GridVertices = DoGridPoints(direction);
-        // TODO: do lines themselves (using verts)
+        gridLine.GridVertices = DoGridPointPair(index, direction);
+
+        // TODO: Alternative implementation using something other than Rects!
+        gridLine.GridLineRect.DoUpdate();
 
         return gridLine;
     }
 
-    private GridPointPair DoGridPoints(Direction direction)
+    private GridPointPair DoGridPointPair(int index, Direction direction)
     {
         GridPointPair gridPointPair = new GridPointPair();
-
-        int iterator = 0;
-        int count;
 
         Vector2 start = new Vector2();
         Vector2 end = new Vector2();
@@ -126,33 +133,24 @@ internal class Grid
         if (direction == Direction.Vertical)
         {
             // then x has the offset
-            start.x = iterator + GridSpacing;
+            start.x = index * GridSpacing;
             start.y = 0;
 
             end.x = start.x;
             end.y = GridBounds.height;
-
-            count = GridLineListVertical.GridLines.Count;
         }
         else
         {
             // y has the offset
             start.x = 0;
-            start.y = iterator + GridSpacing;
+            start.y = index * GridSpacing;
 
             end.x = GridBounds.width;
             end.y = start.x;
-
-            count = GridLineListHorizontal.GridLines.Count;
         }
 
-        for(int i = 0; i < count; i++)
-        {
-            gridPointPair.StartVertex = new Vector2(start.x, start.y);
-            gridPointPair.EndVertex = new Vector2(end.x, end.y);
-
-            iterator++;
-        }
+        gridPointPair.StartVertex = new Vector2(start.x, start.y);
+        gridPointPair.EndVertex = new Vector2(end.x, end.y);
 
         return gridPointPair;
     }
@@ -161,7 +159,7 @@ internal class Grid
     {
         public GridLineList()
         {
-            GridLines = new List<GridLine>();
+            _gridLines = new List<GridLine>();
         }
 
         private List<GridLine> _gridLines;
@@ -176,14 +174,34 @@ internal class Grid
     {
         public GridLine()
         {
-            GridVertices = new GridPointPair();
+            _gridVertices = new GridPointPair();
+            _gridLineRect = new GUILine(GridVertices.StartVertex, GridVertices.EndVertex);
+        }
+
+        private void DoUpdate()
+        {
+            GridLineRect.Start = GridVertices.StartVertex;
+            GridLineRect.End = GridVertices.EndVertex;
+
+            GridLineRect.DoUpdate();
         }
 
         private GridPointPair _gridVertices;
         public GridPointPair GridVertices
         {
             get { return _gridVertices; } 
-            set { _gridVertices = value; }
+            set
+            {
+                _gridVertices = value;
+                DoUpdate();
+            }
+        }
+
+        private GUILine _gridLineRect;
+        public GUILine GridLineRect
+        {
+            get { return _gridLineRect; } 
+            set { _gridLineRect = value; }
         }
     }
 
@@ -191,8 +209,8 @@ internal class Grid
     {
         public GridPointPair()
         {
-            StartVertex = new Vector2();
-            EndVertex = new Vector2();
+            _startVertex = new Vector2();
+            _endVertex = new Vector2();
         }
 
         private Vector2 _startVertex;
@@ -207,6 +225,11 @@ internal class Grid
         {
             get { return _endVertex; }
             set { _endVertex = value; }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("(Start: ({0:F1},{1:F1})  End: ({2:F1},{3:F1})", StartVertex.x, StartVertex.y, EndVertex.x, EndVertex.y);
         }
     }
 
