@@ -7,25 +7,30 @@ internal class EditorCanvas : EditorWindow
     // This will take care of grids, guides (like PS), etc.
     // TODO: Add pivot/origin
 
-    private Rect _canvasRect;
     private Grid _grid;
-
-    private int _minGridSize = 4;
-    private int _maxGridSize = 16;
+    private int _gridSize = 16;
+    private Color _gridColor = new Color(0, 0, 0, 0.1f);
+    private Grid.GridParams _gridParams;
 
     [MenuItem("UnityTools/Window/Editor Canvas")]
-    public static void Initialize()
+    public static void Init()
     {
         EditorCanvas window = (EditorCanvas)EditorWindow.GetWindow(typeof(EditorCanvas));
 
-        window._canvasRect = new Rect(0, 0, window.maxSize.x, window.maxSize.y);
-        window._grid = new Grid(window._canvasRect, 8);
-
+        window.Initialize();
         window.Show();
+    }
+
+    public void Initialize()
+    {
+        _gridParams = new Grid.GridParams(_gridSize, _gridColor);
+
+        _grid = new Grid(_gridParams);
     }
 
     public void OnGUI()
     {
-       _grid.DoGUI();
+        _grid.GridBounds = position;
+        _grid.DoGUI();
     }
 }
